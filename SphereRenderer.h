@@ -4,6 +4,13 @@
 #include <memory>
 
 class SphereRenderer {
+protected:
+    struct Point {
+        double x, y, z;
+        Point(const double& x, const double& y, const double& z)
+        : x(x), y(y), z(z) {}
+    };
+
 public:
     virtual ~SphereRenderer() {}
     virtual void Init() = 0;
