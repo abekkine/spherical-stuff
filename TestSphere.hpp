@@ -1,5 +1,5 @@
-#ifndef TEST_SPHERE_RENDERER_HPP
-#define TEST_SPHERE_RENDERER_HPP
+#ifndef TEST_SPHERE_HPP
+#define TEST_SPHERE_HPP
 
 #include "SphereRenderer.h"
 #include "Graphics.hpp"
@@ -8,7 +8,7 @@
 
 #include <cmath>
 
-class TestSphereRenderer : public SphereRenderer {
+class TestSphere : public SphereRenderer {
 private:
     struct Point {
         double x, y, z;
@@ -18,8 +18,8 @@ private:
     std::vector<Point> points_;
 
 public:
-    TestSphereRenderer() {}
-    ~TestSphereRenderer() {}
+    TestSphere() {}
+    ~TestSphere() {}
     void Init() {
         points_.clear();
         const double kPi = 3.141592653;
@@ -44,4 +44,4 @@ public:
     }
 };
 
-#endif // TEST_SPHERE_RENDERER_HPP
+#endif // TEST_SPHERE_HPP

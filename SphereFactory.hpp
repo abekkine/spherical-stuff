@@ -2,7 +2,7 @@
 #define SPHERE_FACTORY_HPP
 
 #include "SphereRenderer.h"
-#include "TestSphereRenderer.hpp"
+#include "TestSphere.hpp"
 
 #include <functional>
 #include <unordered_map>
@@ -12,7 +12,7 @@ private:
     typedef std::function<SpherePtr()> SphereCreatorFn;
 
     static SpherePtr getTestSphere() {
-        return std::make_shared<TestSphereRenderer>();
+        return std::make_shared<TestSphere>();
     }
 
 public:
