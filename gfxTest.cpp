@@ -1,63 +1,23 @@
 #include "Graphics.hpp"
+#include "SphereFactory.hpp"
+#include "Camera.hpp"
+#include "ModelTransformer.hpp"
 
 #include <iostream>
 #include <cmath>
 
-// Camera stuff
-#include <glm.hpp>
-#include <ext.hpp>
-#include <gtc/type_ptr.hpp>
-#include <gtc/matrix_transform.hpp>
-#include <gtx/rotate_vector.hpp>
-#include <gtc/matrix_inverse.hpp>
-// End
+int main(int argc, char** argv) {
 
-glm::mat4 mProjection(1.0);
-glm::mat4 mView(1.0);
-void camera_update() {
-    glLoadIdentity();
-    mView = glm::lookAt(
-        glm::vec3(250.0, 0.0, 150.0),
-        glm::vec3(0.0, 0.0, 0.0),
-        glm::vec3(0.0, 0.0, 1.0)
-    );
-    mProjection = glm::perspective(
-        glm::radians(60.0),
-        1.0,
-        0.0,
-        1000.0
-    );
-    glm::mat4 mvp = mProjection * mView;
-    glMatrixMode(GL_PROJECTION);
-    glLoadMatrixf(glm::value_ptr(mvp));
-}
-
-void render_sphere() {
-    const double kPi = 3.141592653;
-    const double r = 100.0;
-    static float a = 0.0;
-    glRotatef(a, 0.0, 0.0, 1.0);
-    a += 0.5;
-    glPointSize(3.0);
-    glColor3f(1.0, 0.5, 0.0);
-    glBegin(GL_POINTS);
-    for (double theta=0.0; theta < 2.0 * kPi; theta += 0.1 * kPi) {
-        for (double phi=-kPi; phi < kPi; phi += 0.1 * kPi) {
-            double x, y, z;
-            x = r * cos(theta) * cos(phi);
-            y = r * sin(theta) * cos(phi);
-            z = r * sin(phi);
-            glVertex3d(
-                x,
-                y,
-                z
-            );
-        }
+    std::string name = "testSphere";
+    if (argc > 1) {
+        name = std::string(argv[1]);
     }
-    glEnd();
-}
 
-int main() {
+    auto sphere = SphereFactory::getSphere(name);
+    if (sphere == nullptr) {
+        std::cout << "There's no such sphere named as [" << name << "]!\n";
+        return 0;
+    }
 
     GFX.SetWindowSize(800, 800);
     GFX.SetWindowPosition(1970, 50);
@@ -71,17 +31,24 @@ int main() {
         }
     });
     GFX.Init();
-   
+
+    sphere->Init();
+
+    auto camera = std::make_unique<Camera>();
+
+    auto transform = std::make_unique<ModelTransformer>();
+
+    double angle = 0.0;
     while (!GFX.QuitCondition()) {
         GFX.PreRender();
         GFX.WorldMode();
 
         // Render World
-        camera_update();
-        render_sphere();
+        camera->Update();
 
-        // GFX.UiMode();
-        // TODO : Render UI
+        transform->Update();
+
+        sphere->Render();
 
         GFX.PostRender();
     }
