@@ -4,6 +4,7 @@
 #include "SphereRenderer.h"
 #include "TestSphere.hpp"
 #include "RandomSphere.hpp"
+#include "RepulsiveSphere.hpp"
 
 #include <functional>
 #include <unordered_map>
@@ -18,12 +19,16 @@ private:
     static SpherePtr getRandomSphere() {
         return std::make_shared<RandomSphere>();
     }
+    static SpherePtr getRepulsiveSphere() {
+        return std::make_shared<RepulsiveSphere>();
+    }
 
 public:
     static SpherePtr getSphere(const std::string& name) {
         static std::unordered_map<std::string, SphereCreatorFn> creator_map_ = {
-            { "testSphere", getTestSphere },
-            { "randomSphere", getRandomSphere }
+            { "test", getTestSphere },
+            { "random", getRandomSphere },
+            { "repulsive", getRepulsiveSphere }
         };
 
         auto it = creator_map_.find(name);

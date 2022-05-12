@@ -1,6 +1,8 @@
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 
+#define GLM_ENABLE_EXPERIMENTAL
+
 #include <glm.hpp>
 #include <ext.hpp>
 #include <gtc/type_ptr.hpp>

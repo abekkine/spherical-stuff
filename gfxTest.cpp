@@ -8,7 +8,7 @@
 
 int main(int argc, char** argv) {
 
-    std::string name = "testSphere";
+    std::string name = "test";
     if (argc > 1) {
         name = std::string(argv[1]);
     }
