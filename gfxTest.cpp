@@ -4,6 +4,8 @@
 #include "ModelTransformer.hpp"
 
 #include <iostream>
+#include <thread>
+#include <chrono>
 #include <cmath>
 
 int main(int argc, char** argv) {
@@ -49,8 +51,11 @@ int main(int argc, char** argv) {
         transform->Update();
 
         sphere->Render();
+        sphere->Update();
 
         GFX.PostRender();
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 
     GFX.Quit();

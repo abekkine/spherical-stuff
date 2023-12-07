@@ -16,7 +16,7 @@ public:
         glPointSize(3.0);
         glColor3f(1.0, 0.5, 0.0);
 
-        angle_ += 0.5;
+        angle_ += 0.1;
     }
 };
 
